@@ -64,7 +64,7 @@ python main.py
 ## 8-Week Checkpoints
 
 ### Week 1 — Agent Fundamentals + Multi-Agent Orchestration
-- [ ] ReAct agent with 3 tools (`web_search`, `calculator`, `get_current_time`)
+- [ ] ~~ReAct agent with 3 tools (`web_search`, `calculator`, `get_current_time`)~~
 - [ ] LangGraph 3-node system with conditional routing
 - [ ] Same task implemented in LangGraph, CrewAI, AutoGen
 - [ ] Framework comparison doc (`docs/framework_decision.md`)
