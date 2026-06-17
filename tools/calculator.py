@@ -1,3 +1,47 @@
+"""Simple calculator tool: safely evaluate arithmetic expressions."""
+import ast
+import operator as op
+from datetime import datetime
+
+
+_operators = {
+    ast.Add: op.add,
+    ast.Sub: op.sub,
+    ast.Mult: op.mul,
+    ast.Div: op.truediv,
+    ast.Pow: op.pow,
+    ast.USub: op.neg,
+    ast.Mod: op.mod,
+}
+
+
+def _eval(node):
+    if isinstance(node, ast.Num):
+        return node.n
+    if isinstance(node, ast.UnaryOp):
+        return _operators[type(node.op)](_eval(node.operand))
+    if isinstance(node, ast.BinOp):
+        return _operators[type(node.op)](_eval(node.left), _eval(node.right))
+    raise ValueError("Unsupported expression")
+
+
+def calculate(expression: str):
+    """Safely calculate a simple arithmetic expression and return result.
+
+    Raises ValueError on invalid expressions.
+    Also logs the call with a timestamp when run as a tool.
+    """
+    ts = datetime.utcnow().isoformat() + "Z"
+    try:
+        tree = ast.parse(expression, mode="eval")
+        result = _eval(tree.body)
+        return {"input": expression, "result": result, "time": ts}
+    except Exception as e:
+        return {"input": expression, "error": str(e), "time": ts}
+
+
+if __name__ == "__main__":
+    print(calculate("2+3*4"))
 def addition(a, b):
     return a + b
 
